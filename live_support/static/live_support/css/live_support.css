@@ -1,0 +1,83 @@
+.clear_left {
+    clear: left;
+}
+
+ul.chat_names {
+    margin: 0px;
+}
+
+ul.chat_names li a.selected {
+    background: #EDF3FE;
+}
+
+ul.chat_names li a.new_message {
+    border-color: red; 
+}
+
+ul.chat_names li {
+    float: left;
+    list-style: none;
+    white-space: nowrap;
+}
+
+ul.chat_names li a {
+    padding: 5px 10px;
+    /*margin-right: -1px;*/
+    border: 1px solid #EDF3FE;
+    cursor: pointer;
+}
+
+
+.message_list {
+    margin: 10px;
+    display: none;
+    border: 1px solid #EDF3FE;
+    width: 500px;
+    height: 200px;
+    position: relative;
+}
+
+.message_list ul {
+    padding: 5px;
+    margin: 0;
+    overflow-y: scroll;
+    height: 165px;
+}
+
+.message_list li {
+    list-style: none;
+}
+
+.pending_chats {
+    float: left;
+    width: 200px;
+}
+
+.active_chats {
+    float: left;
+}
+
+.message_box_container {
+    position: absolute;
+    bottom: 0;
+    width: 500px;
+    height: 25px;
+}
+.message_box_container form {
+    display: inline;
+}
+.message_box_container input {
+    margin: 2px 0;
+}
+.message_box_container .message_box {
+    width: 406px;
+    padding: 3px 0;
+}
+
+.message_box_container .send_message_button {
+    width: 45px;
+}
+
+.message_box_container .end_chat_button {
+    width: 39px;
+}

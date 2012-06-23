@@ -1,0 +1,35 @@
+Welcome, {{ chat.name }}.
+
+<script type="text/javascript" src="{{ STATIC_URL }}live_support/js/jquery.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}live_support/js/live_support.js"></script>
+<script>
+    document.get_messages_url = "{% url live_support.views.client_get_messages chat.hash_key %}";
+</script>
+<link href="{{ STATIC_URL }}live_support/css/live_support.css" type="text/css" media="all" rel="stylesheet" />
+<div class="chat">
+    <div class="clear_left"></div>
+    <div id="chat_{{ chat.id }}" class="message_list">
+        <ul>
+        <li>{{ chat.name }}: {{ chat.details }}</li>
+        {% for message in chat.messages.all %}
+            <li id="message_{{ message.id }}">{{ message.name }}: {{ message.message }}</li>
+        {% endfor %}
+        </ul>
+        <div class="message_box_container">
+            <form method="post" action="{% url live_support.views.client_post_message chat.hash_key %}">
+                {% csrf_token %}
+                <input type="hidden" class="chat_id" name="chat_id" value="{{ chat.id }}" />
+                <input type="text" class="message_box" name="message" />
+                <input type="submit" class="send_message_button" value="Send" />
+            </form>
+            <form method="post" 
+                action="{% url live_support.views.end_chat chat.id %}"
+            >
+                {% csrf_token %}
+                <input type="hidden" name="end_chat" value="true" />
+                <input type="submit" class="end_chat_button" value="End" />
+            </form>
+        </div>
+    </div>
+</div>
+

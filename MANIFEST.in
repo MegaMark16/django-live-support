@@ -1,0 +1,7 @@
+include AUTHORS
+include LICENSE
+include README.rst
+recursive-include live_support/templates/live_support *
+recursive-include live_support/static *
+
+

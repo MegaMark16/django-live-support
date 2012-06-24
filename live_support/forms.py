@@ -4,6 +4,7 @@ from live_support.models import Chat, ChatMessage
 
 
 class ChatForm(forms.ModelForm):
+    details = forms.CharField(widget=forms.Textarea, label='Question')
     class Meta:
         model = Chat
         fields = ('name','details',)

@@ -10,6 +10,10 @@ ul.chat_names li a.selected {
     background: #EDF3FE;
 }
 
+ul.chat_names li a.disconnected {
+    background: red;
+}
+
 ul.chat_names li a.new_message {
     border-color: red; 
 }

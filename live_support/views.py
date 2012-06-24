@@ -47,23 +47,30 @@ def end_chat(request, chat_id):
 
 @permission_required('live_support.chat_admin')
 def get_messages(request):
-    alive = True
-    chat_messages = {}
+    chats = {}
     for k, v in request.GET.iteritems():
+        alive = True
         messages = ChatMessage.objects.filter(chat_id=k)
         if v:
             messages = ChatMessage.objects.filter(chat_id=k, id__gt=v)
-        chat_messages[k] = json.loads(serializers.serialize('json', messages))
 
-    if not cache.get('chat %s' % k):
-        alive = False
+        if not cache.get('chat %s' % k):
+            alive = False
 
-    pending_chats = Chat.objects.filter(ended=None).exclude(agents=request.user).order_by('-started')
+        chats[k] = {
+            'messages': json.loads(serializers.serialize('json', messages)),
+            'alive': alive
+        }
+
+    pending_chats = list(Chat.objects.filter(ended=None).exclude(agents=request.user).order_by('-started'))
+    pending_chats_list = [{
+        'name': chat.name, 
+        'url': reverse('live_support.views.join_chat', args=[chat.id]),
+    } for chat in pending_chats ]
 
     output = {
-        'messages': chat_messages,
-        'pending_chats': json.loads(serializers.serialize('json', pending_chats)),
-        'alive': alive,
+        'chats': chats,
+        'pending_chats': pending_chats_list,
     }
 
     return HttpResponse(json.dumps(output))
@@ -77,9 +84,13 @@ def client_get_messages(request, chat_uuid):
     else:
         messages = chat.messages.all()
 
-    chat_messages = { chat.id: json.loads(serializers.serialize('json', messages)), }
+    chats = { 
+        chat.id: {
+            'messages': json.loads(serializers.serialize('json', messages)), 
+        }
+    }
     output = {
-        'messages': chat_messages,
+        'chats': chats,
         'pending_chats': [],
     }
     return HttpResponse(json.dumps(output))

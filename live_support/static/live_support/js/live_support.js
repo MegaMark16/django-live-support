@@ -47,22 +47,29 @@ function gotMessages(resp) {
         return;
     }
     current_check_messages_interval = check_messages_interval;
-    for (var chat_id in resp.messages) {
-        var messages = resp.messages[chat_id];
+    for (var chat_id in resp.chats) {
+        var chat = resp.chats[chat_id];
         var message_list = $('#chat_' + chat_id).find('ul');
-        for (var index in messages) {
-            var message = messages[index];
+        for (var index in chat.messages) {
+            var message = chat.messages[index];
             var new_message_element = $( document.createElement('li'));
             $(new_message_element).html(message.fields.name + ': ' + message.fields.message);
             $(new_message_element).attr('id', 'message_' + message.pk);
             $(message_list).append(new_message_element);
             $('.chat_names a[href="' + chat_id + '"]:not(".selected")').addClass('new_message');
         }
-        if (resp.alive) {
+        if (chat.alive) {
             // user still connected or reconnected
+            $('.chat_names a[href="' + chat_id + '"]').removeClass('disconnected');
         }
         else {
             // user timed out
+            $('.chat_names a[href="' + chat_id + '"]').addClass('disconnected');
+        }
+        $('.pending_chats ul').children().remove();
+        for (var index in resp.pending_chats) {
+            var chat = resp.pending_chats[index];
+            $('.pending_chats ul').append('<li><a href="' + chat.url + '">' + chat.name + '</a></li>');
         }
     }
     scrollAll();

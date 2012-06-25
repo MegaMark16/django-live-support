@@ -50,9 +50,9 @@ def get_messages(request):
     chats = {}
     for k, v in request.GET.iteritems():
         alive = True
-        messages = ChatMessage.objects.filter(chat_id=k)
+        messages = ChatMessage.objects.filter(chat__id=k)
         if v:
-            messages = ChatMessage.objects.filter(chat_id=k, id__gt=v)
+            messages = ChatMessage.objects.filter(chat__id=k, id__gt=v)
 
         if not cache.get('chat %s' % k):
             alive = False

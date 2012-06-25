@@ -12,7 +12,7 @@ class Migration(SchemaMigration):
         db.create_table('live_support_chat', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('hash_key', self.gf('django.db.models.fields.CharField')(default=UUID('4b0bddf1-3117-4f0a-b098-7e8a85903cf6'), unique=True, max_length=64, blank=True)),
+            ('hash_key', self.gf('django.db.models.fields.CharField')(unique=True, max_length=64, blank=True)),
             ('details', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('started', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('ended', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
@@ -92,7 +92,7 @@ class Migration(SchemaMigration):
             'agents': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'chats'", 'blank': 'True', 'to': "orm['auth.User']"}),
             'details': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'ended': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'hash_key': ('django.db.models.fields.CharField', [], {'default': "UUID('5c4eb760-cecf-4f63-9b77-8e354adee878')", 'unique': 'True', 'max_length': '64', 'blank': 'True'}),
+            'hash_key': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '64', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'started': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})

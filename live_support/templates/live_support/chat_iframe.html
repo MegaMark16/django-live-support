@@ -4,11 +4,11 @@
         var toggle = document.getElementById("toggle_live_support");
         console.log(chat.style.width);
         if (chat.style.width == '560px') {
-            chat.style.width = 20;
+            chat.style.width = '20px';
             toggle.style.background = 'url({{ STATIC_URL }}live_support/images/open_button.png)';
         }
         else {
-            chat.style.width = 560;
+            chat.style.width = '560px';
             toggle.style.background = 'url({{ STATIC_URL }}live_support/images/close_button.png)';
         }
     }

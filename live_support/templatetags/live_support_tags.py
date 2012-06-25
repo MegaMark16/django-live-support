@@ -1,5 +1,6 @@
-from datetime import timedelta, datetime
 from django import template
+from django.conf import settings
+from datetime import timedelta, datetime
 from django.core.urlresolvers import reverse
 
 from live_support.models import Chat
@@ -15,6 +16,7 @@ def chat_iframe(context):
             iframe_url = reverse('live_support.views.client_chat', args=[chat[0].hash_key,])
 
     return {
+        'STATIC_URL': settings.STATIC_URL,
         'url': iframe_url,
     }
 

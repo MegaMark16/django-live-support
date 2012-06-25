@@ -1,11 +1,53 @@
-<iframe class="live_support" src="{{ url }}" style="
-    width: 535px;
-    height: 224px;
+<script>
+    function toggleChat() {
+        var chat = document.getElementById("live_support_chat");
+        var toggle = document.getElementById("toggle_live_support");
+        console.log(chat.style.width);
+        if (chat.style.width == '560px') {
+            chat.style.width = 20;
+            toggle.style.background = 'url({{ STATIC_URL }}live_support/images/open_button.png)';
+        }
+        else {
+            chat.style.width = 560;
+            toggle.style.background = 'url({{ STATIC_URL }}live_support/images/close_button.png)';
+        }
+    }
+</script>
+<style>
+.chat_window {
+    width: 20px;
+    height: 226px;
     position: fixed;
     display: block;
     top: 50%;
+    left: 0;
     z-index: 999;
     background: #fff;
-    border: thin solid black;
     margin-top: -112px;
-"></iframe>
+    overflow: hidden;
+}
+
+.chat_window .live_support {
+    width: 535px;
+    height: 224px;
+    border: thin solid black;
+    float: left;
+}
+
+.chat_window #toggle_live_support {
+    cursor: pointer;
+    right: 0;
+    position: absolute;
+    width: 20px;
+    height: 226px;
+    background: url({{ STATIC_URL }}live_support/images/open_button.png);
+    
+}
+</style>
+
+<div id="live_support_chat" class="chat_window">
+    <iframe class="live_support" src="{{ url }}">
+    </iframe>
+    <div id="toggle_live_support" onClick="toggleChat()">
+    </div>
+</div>

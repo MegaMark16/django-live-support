@@ -60,11 +60,11 @@ function gotMessages(resp) {
         }
         if (chat.alive) {
             // user still connected or reconnected
-            $('.chat_names a[href="' + chat_id + '"]').removeClass('disconnected');
+            $('#chat_' + chat_id + ' .status').hide();
         }
         else {
             // user timed out
-            $('.chat_names a[href="' + chat_id + '"]').addClass('disconnected');
+            $('#chat_' + chat_id + ' .status').show();
         }
         $('.pending_chats ul').children().remove();
         for (var index in resp.pending_chats) {

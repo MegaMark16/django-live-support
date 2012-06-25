@@ -30,6 +30,7 @@
             <div class="chat">
                 <div class="clear_left"></div>
                 <div id="chat_{{ chat.id }}" class="message_list">
+                <div class="status">The user seems to have disconnected.</div>
                     <ul>
                     <li>{{ chat.name }}: {{ chat.details }}</li>
                     {% for message in chat.messages.all %}

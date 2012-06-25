@@ -11,11 +11,11 @@ ul.chat_names li a.selected {
 }
 
 ul.chat_names li a.disconnected {
-    background: red;
+    background: #B0B0B0;
 }
 
 ul.chat_names li a.new_message {
-    border-color: red; 
+    border-color: #CC0000; 
 }
 
 ul.chat_names li {
@@ -52,6 +52,14 @@ ul.chat_names li a {
     list-style: none;
 }
 
+.pending_chats ul li {
+    list-style: none;
+}
+
+.pending_chats ul {
+    margin-left: 5px;
+}
+
 .pending_chats {
     float: left;
     width: 200px;
@@ -59,6 +67,15 @@ ul.chat_names li a {
 
 .active_chats {
     float: left;
+}
+
+.chat .status {
+    padding: 5px;
+    color: #CC0000;
+    background: #fff;
+    right: 15px;
+    position: absolute;
+    display: none;
 }
 
 .message_box_container {

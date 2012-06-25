@@ -46,3 +46,11 @@ Add ``live_support.urls`` to your urls.py, like so:
 Usage
 =============
 
+You can either override the template for the `start_chat` 
+(live_support/start_chat.html) and `client_chat` 
+(live_support/live_support.html) views and just point users to the root 
+of the live_support app as defined in your urls.py file, or you can drop
+the `{% chat_iframe %}` templatetag into your base template, which will
+render the chat sidebar (which pops out into a chat window) on every
+page.
+

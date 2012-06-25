@@ -131,7 +131,7 @@ def start_chat(request):
     chat_form = ChatForm(request.POST or None)
     if chat_form.is_valid():
         chat = chat_form.save()
-        print chat.hash_key
+        request.session['chat_hash_key'] = chat.hash_key
         return HttpResponseRedirect(reverse('live_support.views.client_chat', args=[chat.hash_key,]))
 
     params = {

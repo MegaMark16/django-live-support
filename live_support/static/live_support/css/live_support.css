@@ -102,3 +102,16 @@ ul.chat_names li a {
 .message_box_container .end_chat_button {
     width: 39px;
 }
+
+.start_chat p {
+    padding: 0;
+    margin: 10px 0;
+}
+
+.start_chat textarea {
+    height: 85px;
+}
+
+.start_chat label {
+    display: block;
+}

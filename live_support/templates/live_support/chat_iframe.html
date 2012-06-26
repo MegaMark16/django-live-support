@@ -1,8 +1,10 @@
 <script>
+    // Toggle the chat panel in and out. 
     function toggleChat() {
         var chat = document.getElementById("live_support_chat");
         var toggle = document.getElementById("toggle_live_support");
-        console.log(chat.style.width);
+        // If the chat panel is currently expanded, close it, otherwise 
+        // expand it. Aldo swap out the background image of the toggle button.
         if (chat.style.width == '560px') {
             chat.style.width = '20px';
             toggle.style.background = 'url({{ STATIC_URL }}live_support/images/open_button.png)';

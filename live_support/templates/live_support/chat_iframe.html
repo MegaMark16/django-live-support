@@ -1,55 +1,63 @@
-<script>
+<!-- If jQuery is already being loaded you should comment out the line below. -->
+<script type="text/javascript" src="{{ STATIC_URL }}live_support/js/jquery.js"></script>
+<script type="text/javascript">
     // Toggle the chat panel in and out. 
-    function toggleChat() {
-        var chat = document.getElementById("live_support_chat");
-        var toggle = document.getElementById("toggle_live_support");
+    function showChat() {
         // If the chat panel is currently expanded, close it, otherwise 
         // expand it. Aldo swap out the background image of the toggle button.
-        if (chat.style.width == '560px') {
-            chat.style.width = '20px';
-            toggle.style.background = 'url({{ STATIC_URL }}live_support/images/open_button.png)';
-        }
-        else {
-            chat.style.width = '560px';
-            toggle.style.background = 'url({{ STATIC_URL }}live_support/images/close_button.png)';
-        }
+        $('.chat_window').animate({'height': '252px', 'width': '537px'});
+        $('#hide_live_support, #show_live_support').toggle();
+    }
+    function hideChat() {
+        // If the chat panel is currently expanded, close it, otherwise 
+        // expand it. Aldo swap out the background image of the toggle button.
+        $('.chat_window').animate({'height': '26px', 'width': '200px'});
+        $('#hide_live_support, #show_live_support').toggle();
     }
 </script>
 <style>
 .chat_window {
-    width: 20px;
-    height: 226px;
     position: fixed;
     display: block;
-    top: 50%;
-    left: 0;
+    bottom: 0px;
+    right: 20px;
     z-index: 999;
     background: #fff;
-    margin-top: -112px;
     overflow: hidden;
+    border: thin solid black;
+    height: 26px;
+    width: 200px;
 }
 
 .chat_window .live_support {
     width: 535px;
     height: 224px;
-    border: thin solid black;
     float: left;
+    border: none;
 }
 
-.chat_window #toggle_live_support {
+.chat_window #show_live_support {
     cursor: pointer;
-    right: 0;
-    position: absolute;
-    width: 20px;
-    height: 226px;
-    background: url({{ STATIC_URL }}live_support/images/open_button.png);
-    
+    background: #F2F2F2;
+    padding: 3px;
 }
+
+.chat_window #hide_live_support {
+    cursor: pointer;
+    background: #F2F2F2;
+    display: none;
+    padding: 3px;
+}
+
 </style>
 
-<div id="live_support_chat" class="chat_window">
+<div id="live_support_chat" class="chat_window active">
+    <div id="show_live_support" onClick="showChat()">
+        Chat Now
+    </div>
+    <div id="hide_live_support" onClick="hideChat()">
+        Welcome to Django Live Support
+    </div>
     <iframe class="live_support" src="{{ url }}">
     </iframe>
-    <div id="toggle_live_support" onClick="toggleChat()">
-    </div>
 </div>

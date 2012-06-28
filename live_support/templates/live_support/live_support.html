@@ -1,3 +1,4 @@
+{% load i18n %}
 <script type="text/javascript" src="{{ STATIC_URL }}live_support/js/jquery.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}live_support/js/live_support.js"></script>
 <script>
@@ -18,14 +19,14 @@
                 {% csrf_token %}
                 <input type="hidden" class="chat_id" name="chat_id" value="{{ chat.id }}" />
                 <input type="text" class="message_box" name="message" />
-                <input type="submit" class="send_message_button" value="Send" />
+                <input type="submit" class="send_message_button" value="{% trans 'Send' %}" />
             </form>
             <form method="post" 
                 action="{% url live_support.views.end_chat chat.id %}"
             >
                 {% csrf_token %}
                 <input type="hidden" name="end_chat" value="true" />
-                <input type="submit" class="end_chat_button" value="End" />
+                <input type="submit" class="end_chat_button" value="{% trans 'End' %}" />
             </form>
         </div>
     </div>

@@ -1,8 +1,9 @@
+{% load i18n %}
 <link href="{{ STATIC_URL }}live_support/css/live_support.css" type="text/css" media="all" rel="stylesheet" />
 <div class="start_chat">
     <form method="post">
         {% csrf_token %}
         {{ chat_form.as_p }}
-        <p><input type="submit" value="Start Chat" /></p>
+        <p><input type="submit" value="{% trans 'Start Chat' %}" /></p>
     </form>
 </div>

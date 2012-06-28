@@ -1,3 +1,4 @@
+{% load i18n %}
 <!-- If jQuery is already being loaded you should comment out the line below. -->
 <script type="text/javascript" src="{{ STATIC_URL }}live_support/js/jquery.js"></script>
 <script type="text/javascript">
@@ -6,13 +7,14 @@
         // If the chat panel is currently expanded, close it, otherwise 
         // expand it. Aldo swap out the background image of the toggle button.
         $('.chat_window').animate({'height': '252px', 'width': '537px'});
-        $('#hide_live_support, #show_live_support').toggle();
+        $('#hide_live_support, #show_live_support, .live_support').toggle();
     }
     function hideChat() {
         // If the chat panel is currently expanded, close it, otherwise 
         // expand it. Aldo swap out the background image of the toggle button.
-        $('.chat_window').animate({'height': '26px', 'width': '200px'});
-        $('#hide_live_support, #show_live_support').toggle();
+        $('.chat_window').animate({'height': '26px', 'width': '200px'}, function() {
+            $('#hide_live_support, #show_live_support, .live_support').toggle();
+        });
     }
 </script>
 <style>
@@ -34,6 +36,7 @@
     height: 224px;
     float: left;
     border: none;
+    display: none;
 }
 
 .chat_window #show_live_support {
@@ -53,10 +56,10 @@
 
 <div id="live_support_chat" class="chat_window active">
     <div id="show_live_support" onClick="showChat()">
-        Chat Now
+        {% trans 'Chat Now' %} 
     </div>
     <div id="hide_live_support" onClick="hideChat()">
-        Welcome to Django Live Support
+        {% trans 'Welcome to Django Live Support' %}
     </div>
     <iframe class="live_support" src="{{ url }}">
     </iframe>

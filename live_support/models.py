@@ -2,6 +2,7 @@ import os
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
 from datetime import datetime
 from uuid import uuid4 
 
@@ -10,10 +11,10 @@ class ChatManager(models.Manager):
         return super(ChatManager, self).get_query_set().filter(ended=None)
 
 class Chat(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(_("name"), max_length=255)
     hash_key = models.CharField(unique=True, max_length=64, 
             editable=False, blank=True, default=uuid4)
-    details = models.TextField(blank=True)
+    details = models.TextField(_("question"), blank=True)
     started = models.DateTimeField(auto_now_add=True)
     ended = models.DateTimeField(null=True, blank=True)
     agents = models.ManyToManyField(User, blank=True, related_name='chats')

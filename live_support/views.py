@@ -92,6 +92,7 @@ def get_messages(request):
     pending_chats_list = [{
         'name': escape(chat.name), 
         'url': reverse('live_support.views.join_chat', args=[chat.id]),
+        'active': chat.is_active(),
     } for chat in pending_chats ]
 
     output = {

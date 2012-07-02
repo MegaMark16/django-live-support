@@ -55,6 +55,9 @@ ul.chat_names li a {
 .pending_chats ul li {
     list-style: none;
 }
+.pending_chats ul li a.inactive {
+    color: #CC0000; 
+}
 
 .pending_chats ul {
     margin-left: 5px;

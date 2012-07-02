@@ -106,7 +106,7 @@ function gotMessages(resp) {
     $('.pending_chats ul').children().remove();
     for (var index in resp.pending_chats) {
         var chat = resp.pending_chats[index];
-        $('.pending_chats ul').append('<li><a href="' + chat.url + '">' + chat.name + '</a></li>');
+        $('.pending_chats ul').append('<li><a class="' + chat.active  + '" href="' + chat.url + '">' + chat.name + '</a></li>');
     }
 
     // Scroll all of the chat sessions to the bottom of the message list.

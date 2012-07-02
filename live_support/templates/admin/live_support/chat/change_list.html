@@ -15,7 +15,7 @@
             <h4>{% trans 'Pending Chats' %}</h4>
             <ul>
             {% for chat in pending_chats %}
-                <li><a href="{% url live_support.views.join_chat chat.id %}">{{ chat.name }}</a></li>
+                <li><a class="{{ chat.is_active }}" href="{% url live_support.views.join_chat chat.id %}">{{ chat.name }}</a></li>
             {% endfor %}
             </ul>
         </div>

@@ -1,10 +1,11 @@
 import os
+from datetime import datetime
+from uuid import uuid4 
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-from datetime import datetime
-from uuid import uuid4 
+from django.core.cache import cache
 
 class ChatManager(models.Manager):   
     def get_query_set(self):
@@ -27,7 +28,10 @@ class Chat(models.Model):
     def end(self):
         self.ended = datetime.now()
         self.save()
-    
+
+    def is_active(self):
+        return cache.get('chat %s' % self.id, 'inactive')
+
     class Meta:
             permissions = (
                 ("chat_admin", "Chat Admin"),

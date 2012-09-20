@@ -5,7 +5,8 @@ version = __import__('live_support').__version__
 
 install_requires = [
     'setuptools',
-    'django',
+    'simplejson',
+    'django>=1.3',
 ]
 
 setup(

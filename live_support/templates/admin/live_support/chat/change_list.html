@@ -32,7 +32,7 @@
                 <div id="chat_{{ chat.id }}" class="message_list">
                 <div class="status">{% trans 'The user seems to have disconnected.' %}</div>
                     <ul>
-                    <li>{{ chat.name }}: {{ chat.details }}</li>
+                    <li class="question">Question: {{ chat.details }}</li>
                     {% for message in chat.messages.all %}
                         <li id="message_{{ message.id }}">{{ message.name }}: {{ message.message }}</li>
                     {% endfor %}

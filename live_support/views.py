@@ -1,4 +1,8 @@
-import json
+try:
+    import simplejson as json
+except ImportError:
+    print "Failing over"
+    import json
 from django.db import models 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect

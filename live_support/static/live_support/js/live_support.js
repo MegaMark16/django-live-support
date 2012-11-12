@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('.send_message_button').click(sendMessage);
 
     // show the first active chat and set its label to active
-    $('.message_list:first').show();
+    $('.message_list:first:hidden').show();
     $('.chat_names a:first').addClass('selected');
 
     // Scroll all of the active chats to the bottom of the conversation

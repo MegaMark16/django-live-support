@@ -7,11 +7,12 @@
 <link href="{{ STATIC_URL }}live_support/css/live_support.css" type="text/css" media="all" rel="stylesheet" />
 <div class="chat">
     <div class="clear_left"></div>
-    <div id="chat_{{ chat.id }}" class="message_list">
+    <div id="chat_{{ chat.id }}" class="message_list" style="display: block;">
         <ul>
         <li>{{ chat.name }}: {{ chat.details }}</li>
         {% for message in chat.messages.all %}
-            <li id="message_{{ message.id }}">{{ message.name }}: {{ message.message }}</li>
+        <li id="message_{{ message.id }}">
+        {% if message.name %}{{ message.name }}: {% endif %}{{ message.message }}</li>
         {% endfor %}
         </ul>
         <div class="message_box_container">

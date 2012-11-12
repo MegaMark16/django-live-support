@@ -80,7 +80,12 @@ function gotMessages(resp) {
         for (var index in chat.messages) {
             var message = chat.messages[index];
             var new_message_element = $( document.createElement('li'));
-            $(new_message_element).html(message.name + ': ' + message.message);
+            if (message.name != undefined) {
+                $(new_message_element).html(message.message);
+            }
+            else {
+                $(new_message_element).html(message.name + ': ' + message.message);
+            }
             $(new_message_element).attr('id', 'message_' + message.pk);
             $(message_list).append(new_message_element);
             // Add a "new_message" class to the current chat session label

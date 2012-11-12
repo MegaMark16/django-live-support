@@ -20,6 +20,10 @@ def join_chat(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id)
     if request.user.is_authenticated():
         chat.agents.add(request.user)
+        message = ChatMessage()
+        name = request.user.first_name or request.user.username
+        message.message = '%s has joined the chat' % name
+        chat.messages.add(message)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 @permission_required('live_support.chat_admin')

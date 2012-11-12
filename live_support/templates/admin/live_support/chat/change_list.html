@@ -34,7 +34,7 @@
                     <ul>
                     <li class="question">Question: {{ chat.details }}</li>
                     {% for message in chat.messages.all %}
-                        <li id="message_{{ message.id }}">{{ message.name }}: {{ message.message }}</li>
+                        <li id="message_{{ message.id }}">{% if message.name %}{{ message.name }}: {% endif %}{{ message.message }}</li>
                     {% endfor %}
                     </ul>
                     <div class="message_box_container">

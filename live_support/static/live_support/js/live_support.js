@@ -80,7 +80,7 @@ function gotMessages(resp) {
         for (var index in chat.messages) {
             var message = chat.messages[index];
             var new_message_element = $( document.createElement('li'));
-            if (message.name != undefined) {
+            if (message.name == '') {
                 $(new_message_element).html(message.message);
             }
             else {

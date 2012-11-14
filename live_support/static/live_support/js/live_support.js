@@ -81,6 +81,7 @@ function gotMessages(resp) {
             var message = chat.messages[index];
             var new_message_element = $( document.createElement('li'));
             if (message.name == '') {
+                $(new_message_element).addClass('system_message');
                 $(new_message_element).html(message.message);
             }
             else {

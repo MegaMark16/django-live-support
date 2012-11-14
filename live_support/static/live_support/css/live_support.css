@@ -118,3 +118,7 @@ ul.chat_names li a {
 .start_chat label {
     display: block;
 }
+
+.system_message {
+    color: #D14836;
+}

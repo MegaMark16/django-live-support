@@ -11,8 +11,11 @@
         <ul>
         <li>{{ chat.name }}: {{ chat.details }}</li>
         {% for message in chat.messages.all %}
-        <li id="message_{{ message.id }}">
-        {% if message.name %}{{ message.name }}: {% endif %}{{ message.message }}</li>
+            {% if message.name %}
+                <li id="message_{{ message.id }}">{{ message.name }}: {{ message.message }}</li>
+            {% else %}
+                <li id="message_{{ message.id }}" class="system_message">{{ message.message }}</li>
+            {% endif %}
         {% endfor %}
         </ul>
         <div class="message_box_container">

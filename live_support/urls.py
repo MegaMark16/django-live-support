@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url('^ajax/(?P<chat_id>\d+)/post_message/$', views.post_message), 
     url('^ajax/(?P<chat_id>\d+)/end_chat/$', views.end_chat), 
     url('^ajax/(?P<chat_id>\d+)/join_chat/$', views.join_chat), 
+    url('^(?P<chat_uuid>[\w-]+)/end_chat/$', views.client_end_chat), 
     url('^(?P<chat_uuid>[\w-]+)/get_messages/$', views.client_get_messages), 
     url('^(?P<chat_uuid>[\w-]+)/post_message/$', views.client_post_message), 
     url('^(?P<chat_uuid>[\w-]+)/$', views.client_chat)

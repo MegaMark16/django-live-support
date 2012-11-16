@@ -152,6 +152,17 @@ def client_get_messages(request, chat_uuid):
     return HttpResponse(json.dumps(output))
 
 
+def client_end_chat(request, chat_uuid):
+    chat = get_object_or_404(Chat, hash_key=chat_uuid)
+    if request.POST.get('end_chat') == 'true':
+        message = ChatMessage()
+        name = request.POST.get('name', 'the user')
+        message.message = '%s has left the chat.  This chat has ended.' % name
+        chat.messages.add(message)
+        chat.end()
+    return HttpResponse('Thank you')
+
+
 def client_post_message(request, chat_uuid):
     """
         Post the message from the end user and return a list of any

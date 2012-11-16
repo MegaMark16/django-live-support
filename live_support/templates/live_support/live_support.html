@@ -26,9 +26,10 @@
                 <input type="submit" class="send_message_button" value="{% trans 'Send' %}" />
             </form>
             <form method="post" 
-                action="{% url live_support.views.end_chat chat.id %}"
+                action="{% url live_support.views.client_end_chat chat.hash_key %}"
             >
                 {% csrf_token %}
+                <input type="hidden" name="name" value="{{ chat.name }}" />
                 <input type="hidden" name="end_chat" value="true" />
                 <input type="submit" class="end_chat_button" value="{% trans 'End' %}" />
             </form>

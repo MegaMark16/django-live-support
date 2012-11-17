@@ -4,6 +4,10 @@
     <form method="post">
         {% csrf_token %}
         {{ chat_form.as_p }}
+        {% if admin_active %}
         <p><input type="submit" value="{% trans 'Start Chat' %}" /></p>
+        {% else %}
+        <p><input type="submit" value="{% trans 'Leave Message' %}" /></p>
+        {% endif %}
     </form>
 </div>

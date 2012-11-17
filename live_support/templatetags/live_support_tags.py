@@ -1,5 +1,6 @@
 from django import template
 from django.conf import settings
+from django.core.cache import cache
 from datetime import timedelta, datetime
 from django.core.urlresolvers import reverse
 
@@ -21,6 +22,7 @@ def chat_iframe(context):
     return {
         'STATIC_URL': settings.STATIC_URL,
         'url': iframe_url,
+        'admin_active': cache.get('admin_active', False),
     }
 
 register.inclusion_tag('live_support/chat_iframe.html', takes_context=True)(chat_iframe)

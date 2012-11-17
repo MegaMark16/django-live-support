@@ -115,7 +115,7 @@ def get_messages(request):
         'chats': chats,
         'pending_chats': pending_chats_list,
     }
-
+    cache.set('admin_active', True, 20)
     # Dump the whole thing to json and return it to the browser.
     return HttpResponse(json.dumps(output))
 
@@ -211,14 +211,19 @@ def client_chat(request, chat_uuid):
 
 def start_chat(request):
     chat_form = ChatForm(request.POST or None)
+    admin_active = cache.get('admin_active', False)
     if chat_form.is_valid():
         chat = chat_form.save()
-        request.session['chat_hash_key'] = chat.hash_key
-        return HttpResponseRedirect(reverse('live_support.views.client_chat',
-                                    args=[chat.hash_key, ]))
+        if admin_active:
+            request.session['chat_hash_key'] = chat.hash_key
+            return HttpResponseRedirect(reverse('live_support.views.client_chat',
+                                        args=[chat.hash_key, ]))
+        else:
+            return HttpResponse('Thank you for contacting us')
 
     params = {
         'chat_form': chat_form,
+        'admin_active': admin_active,
     }
     return render_to_response('live_support/start_chat.html', params,
                               context_instance=RequestContext(request))

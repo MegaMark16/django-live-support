@@ -56,7 +56,11 @@
 
 <div id="live_support_chat" class="chat_window active">
     <div id="show_live_support" onClick="showChat()">
+        {% if admin_active %}
         {% trans 'Chat Now' %} 
+        {% else %}
+        {% trans 'Leave a Message' %} 
+        {% endif %}
     </div>
     <div id="hide_live_support" onClick="hideChat()">
         {% trans 'Welcome to Django Live Support' %}

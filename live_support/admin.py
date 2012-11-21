@@ -1,8 +1,12 @@
 from django.contrib import admin
 from django.conf import settings
 
-from live_support.models import Chat, ChatMessage
+from live_support.models import Chat, ChatMessage, SupportGroup
 
+
+class SupportGroupAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name',)
+    filter_horizontal = ('agents',)
 
 class ChatAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'started',)
@@ -32,3 +36,4 @@ class ChatAdmin(admin.ModelAdmin):
 
 admin.site.register(Chat, ChatAdmin)
 admin.site.register(ChatMessage)
+admin.site.register(SupportGroup, SupportGroupAdmin)

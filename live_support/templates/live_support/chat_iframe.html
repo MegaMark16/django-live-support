@@ -1,6 +1,5 @@
 {% load i18n %}
 <!-- If jQuery is already being loaded you should comment out the line below. -->
-<script type="text/javascript" src="{{ STATIC_URL }}live_support/js/jquery.js"></script>
 <script type="text/javascript">
     // Toggle the chat panel in and out. 
     function showChat() {
@@ -15,6 +14,14 @@
         $('.chat_window').animate({'height': '26px', 'width': '200px'}, function() {
             $('#hide_live_support, #show_live_support, .live_support').toggle();
         });
+    }
+    if (typeof(jQuery) == 'undefined') { 
+        jq = document.createElement('script');
+        jq.setAttribute('async', true);
+        jq.setAttribute('type', 'text/javascript');
+        jq.setAttribute('src', '{{ STATIC_URL }}live_support/js/jquery.js');
+        var fs = document.getElementsByTagName('script')[0];
+        fs.parentNode.insertBefore(jq, fs);
     }
 </script>
 <style>

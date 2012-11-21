@@ -101,10 +101,13 @@ def get_messages(request):
 
     # Get the list of pending chat sessions, and for each one get a url for
     # joining that chat session.
-    pending_chats = list(Chat.objects.filter(ended=None)
-                         .exclude(agents=request.user)
+    pending_chats = Chat.objects.filter(ended=None)\
+                         .exclude(agents=request.user)\
                          .order_by('-started')
-                         )
+    if request.user.support_groups.all():
+        pending_chats = pending_chats.filter(support_group__in=request.user.support_groups.all())
+
+    pending_chats = list(pending_chats)
     pending_chats_list = [{
         'name': escape(chat.name),
         'url': reverse('live_support.views.join_chat', args=[chat.id]),
@@ -209,15 +212,19 @@ def client_chat(request, chat_uuid):
                               context_instance=RequestContext(request))
 
 
-def start_chat(request):
+def start_chat(request, support_group_id=None):
     chat_form = ChatForm(request.POST or None)
     admin_active = cache.get('admin_active', False)
     if chat_form.is_valid():
-        chat = chat_form.save()
+        chat = chat_form.save(commit=False)
+        chat.support_group_id = support_group_id
+        chat.save()
         if admin_active:
             request.session['chat_hash_key'] = chat.hash_key
-            return HttpResponseRedirect(reverse('live_support.views.client_chat',
-                                        args=[chat.hash_key, ]))
+            return HttpResponseRedirect(reverse(
+                'live_support.views.client_chat',
+                args=[chat.hash_key, ])
+            )
         else:
             return HttpResponse('Thank you for contacting us')
 

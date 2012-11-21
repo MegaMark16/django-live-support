@@ -6,6 +6,14 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.cache import cache
 
 
+class SupportGroup(models.Model):
+    name = models.CharField(_("name"), max_length=255)
+    agents = models.ManyToManyField(User, blank=True, related_name='support_groups')
+
+    def __unicode__(self):
+        return self.name
+
+
 class ChatManager(models.Manager):
     def get_query_set(self):
         return super(ChatManager, self).get_query_set().filter(ended=None)
@@ -13,7 +21,7 @@ class ChatManager(models.Manager):
 
 class Chat(models.Model):
     name = models.CharField(_("name"), max_length=255)
-    hash_key = models.CharField(unique=True, max_length=64,
+    hash_key = models.CharField(unique=True, max_length=64, null=True,
                                 editable=False, blank=True, default=uuid4)
     details = models.TextField(_("question"), blank=True)
     started = models.DateTimeField(auto_now_add=True)
@@ -21,6 +29,7 @@ class Chat(models.Model):
     agents = models.ManyToManyField(User, blank=True, related_name='chats')
     objects = models.Manager()
     active = ChatManager()
+    support_group = models.ForeignKey(SupportGroup, null=True, blank=True)
 
     def __unicode__(self):
         return '%s: %s' % (self.started, self.name)

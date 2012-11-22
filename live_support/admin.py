@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import Q
 from django.conf import settings
 
 from live_support.models import Chat, ChatMessage, SupportGroup
@@ -6,7 +7,7 @@ from live_support.models import Chat, ChatMessage, SupportGroup
 
 class SupportGroupAdmin(admin.ModelAdmin):
     list_display = ('id', 'name',)
-    filter_horizontal = ('agents',)
+    filter_horizontal = ('agents','supervisors',)
 
 class ChatAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'started',)
@@ -23,8 +24,16 @@ class ChatAdmin(admin.ModelAdmin):
         }
 
     def changelist_view(self, request, extra_context=None):
-        pending_chats = Chat.objects.filter(ended=None, agents=None)\
-            .order_by('-started')
+        user = request.user
+        pending_chats = Chat.objects.filter(ended=None)\
+                             .exclude(agents=user)\
+                             .order_by('-started')
+        groups = SupportGroup.objects.filter(
+            Q(supervisors=user) | 
+            Q(agents=user)
+        )
+        if groups:
+            pending_chats = pending_chats.filter(support_group__in=groups)
         active_chats = Chat.objects.filter(ended=None)\
             .filter(agents=request.user)
         c = {

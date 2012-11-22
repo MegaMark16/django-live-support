@@ -7,10 +7,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth.decorators import permission_required
+from django.db.models import Q
 from django.core.cache import cache
 from django.utils.html import escape
 
-from live_support.models import Chat, ChatMessage
+from live_support.models import Chat, ChatMessage, SupportGroup
 from live_support.forms import ChatMessageForm, ChatForm
 
 
@@ -73,6 +74,7 @@ def get_messages(request):
         query for any new messages for that chat session. Also include all
         pending chat sessions.
     """
+    user = request.user
     chats = {}
     for k, v in request.GET.iteritems():
         alive = True
@@ -102,10 +104,14 @@ def get_messages(request):
     # Get the list of pending chat sessions, and for each one get a url for
     # joining that chat session.
     pending_chats = Chat.objects.filter(ended=None)\
-                         .exclude(agents=request.user)\
+                         .exclude(agents=user)\
                          .order_by('-started')
-    if request.user.support_groups.all():
-        pending_chats = pending_chats.filter(support_group__in=request.user.support_groups.all())
+    groups = SupportGroup.objects.filter(
+        Q(supervisors=user) | 
+        Q(agents=user)
+    )
+    if groups:
+        pending_chats = pending_chats.filter(support_group__in=groups)
 
     pending_chats = list(pending_chats)
     pending_chats_list = [{

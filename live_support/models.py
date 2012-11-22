@@ -8,7 +8,8 @@ from django.core.cache import cache
 
 class SupportGroup(models.Model):
     name = models.CharField(_("name"), max_length=255)
-    agents = models.ManyToManyField(User, blank=True, related_name='support_groups')
+    agents = models.ManyToManyField(User, blank=True, related_name='agent_support_groups')
+    supervisors = models.ManyToManyField(User, blank=True, related_name='supervisor_support_groups')
 
     def __unicode__(self):
         return self.name

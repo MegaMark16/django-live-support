@@ -26,6 +26,7 @@ def chat_iframe(context, support_group_id=None):
         'STATIC_URL': settings.STATIC_URL,
         'url': iframe_url,
         'admin_active': cache.get('admin_active', False),
+        'request': request,
     }
 
 register.inclusion_tag('live_support/chat_iframe.html', takes_context=True)(chat_iframe)

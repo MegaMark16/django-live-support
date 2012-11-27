@@ -124,8 +124,9 @@ def get_messages(request):
         'chats': chats,
         'pending_chats': pending_chats_list,
     }
-    for group in groups:
-        cache.set('admin_active_%s' % group.id, True, 20)
+    if groups:
+        for group in groups:
+            cache.set('admin_active_%s' % group.id, True, 20)
     else:
         cache.set('admin_active', True, 20)
     # Dump the whole thing to json and return it to the browser.

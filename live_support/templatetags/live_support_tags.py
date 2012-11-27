@@ -13,8 +13,10 @@ def chat_iframe(context, support_group_id=None):
     # The default url is the Start Chat page
     if support_group_id:
         iframe_url = reverse('live_support.views.start_chat', args=[support_group_id,])
+        cache_key = 'admin_active_%s' % support_group_id
     else:
         iframe_url = reverse('live_support.views.start_chat')
+        cache_key = 'admin_active'
     if request.session.get('chat_hash_key'):
         chat = Chat.objects.filter(hash_key=request.session['chat_hash_key'])
         if chat and not chat[0].ended:
@@ -25,7 +27,7 @@ def chat_iframe(context, support_group_id=None):
     return {
         'STATIC_URL': settings.STATIC_URL,
         'url': iframe_url,
-        'admin_active': cache.get('admin_active', False),
+        'admin_active': cache.get(cache_key, False),
         'request': request,
     }
 

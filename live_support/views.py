@@ -124,7 +124,10 @@ def get_messages(request):
         'chats': chats,
         'pending_chats': pending_chats_list,
     }
-    cache.set('admin_active', True, 20)
+    for group in groups:
+        cache.set('admin_active_%s' % group.id, True, 20)
+    else:
+        cache.set('admin_active', True, 20)
     # Dump the whole thing to json and return it to the browser.
     return HttpResponse(json.dumps(output))
 
@@ -221,6 +224,8 @@ def client_chat(request, chat_uuid):
 def start_chat(request, support_group_id=None):
     chat_form = ChatForm(request.POST or None)
     admin_active = cache.get('admin_active', False)
+    if support_group_id:
+        admin_active = cache.get('admin_active_%s' % support_group_id, False)
     if chat_form.is_valid():
         chat = chat_form.save(commit=False)
         chat.support_group_id = support_group_id
@@ -233,7 +238,6 @@ def start_chat(request, support_group_id=None):
             )
         else:
             return HttpResponse('Thank you for contacting us')
-
     params = {
         'chat_form': chat_form,
         'admin_active': admin_active,

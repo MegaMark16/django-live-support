@@ -78,10 +78,15 @@ def get_messages(request):
     chats = {}
     for k, v in request.GET.iteritems():
         alive = True
-        messages = ChatMessage.objects.filter(chat__id=k)
+        try:
+            messages = ChatMessage.objects.filter(chat__id=k)
+        except ValueError:
+            next
         if v:
-            messages = ChatMessage.objects.filter(chat__id=k, id__gt=v)
-
+            try:
+                messages = messages.filter(id__gt=v)
+            except ValueError:
+                pass
         # Check to see if the end user has recently checked for new messages
         # for this chat session by checking for the cache entry using the
         # chat id.  If they haven't asked for new messages in the past 30
@@ -234,8 +239,8 @@ def start_chat(request, support_group_id=None):
         if admin_active:
             request.session['chat_hash_key'] = chat.hash_key
             return HttpResponseRedirect(reverse(
-                'live_support.views.client_chat',
-                args=[chat.hash_key, ])
+                'client_chat',
+                args=[chat.hash_key,])
             )
         else:
             return HttpResponse('Thank you for contacting us')

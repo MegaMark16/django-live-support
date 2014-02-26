@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-26 11:15-0300\n"
-"PO-Revision-Date: 2014-02-26 11:27-0300\n"
+"POT-Creation-Date: 2014-02-26 11:40-0300\n"
+"PO-Revision-Date: 2014-02-26 11:43-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: pt_BR\n"
@@ -22,13 +22,37 @@ msgstr ""
 msgid "Question"
 msgstr "Pergunta"
 
-#: models.py:10 models.py:24
+#: models.py:10 models.py:32
 msgid "name"
 msgstr "nome"
 
-#: models.py:27
+#: models.py:22
+msgid "Support group"
+msgstr "Grupo de apoio"
+
+#: models.py:23
+msgid "Support groups"
+msgstr "Grupos de apoio"
+
+#: models.py:35
 msgid "question"
 msgstr "pergunta"
+
+#: models.py:57
+msgid "Chat"
+msgstr "Bate-papo"
+
+#: models.py:58
+msgid "Chats"
+msgstr "Bate-papos"
+
+#: models.py:78
+msgid "Chat message"
+msgstr "Mensagem de bate-papo"
+
+#: models.py:79
+msgid "Chat messages"
+msgstr "Mensagens de bate-papo"
 
 #: templates/admin/live_support/chat/change_list.html:6
 msgid "Chat Admin"

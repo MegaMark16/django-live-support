@@ -8,11 +8,19 @@ from django.core.cache import cache
 
 class SupportGroup(models.Model):
     name = models.CharField(_("name"), max_length=255)
-    agents = models.ManyToManyField(User, blank=True, related_name='agent_support_groups')
-    supervisors = models.ManyToManyField(User, blank=True, related_name='supervisor_support_groups')
+    agents = models.ManyToManyField(
+        User, blank=True, related_name='agent_support_groups'
+    )
+    supervisors = models.ManyToManyField(
+        User, blank=True, related_name='supervisor_support_groups'
+    )
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('Support group')
+        verbose_name_plural = _('Support groups')
 
 
 class ChatManager(models.Manager):
@@ -43,9 +51,11 @@ class Chat(models.Model):
         return cache.get('chat_%s' % self.id, 'inactive')
 
     class Meta:
-            permissions = (
-                ("chat_admin", "Chat Admin"),
-            )
+        permissions = (
+            ("chat_admin", "Chat Admin"),
+        )
+        verbose_name = _('Chat')
+        verbose_name_plural = _('Chats')
 
 
 class ChatMessage(models.Model):
@@ -63,3 +73,7 @@ class ChatMessage(models.Model):
 
     def __unicode__(self):
         return '%s: %s' % (self.sent, self.message)
+
+    class Meta:
+        verbose_name = _('Chat message')
+        verbose_name_plural = _('Chat messages')

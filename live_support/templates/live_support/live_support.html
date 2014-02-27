@@ -1,8 +1,9 @@
+{% load url from future %}
 {% load i18n %}
 <script type="text/javascript" src="{{ STATIC_URL }}live_support/js/jquery.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}live_support/js/live_support.js"></script>
 <script>
-    document.get_messages_url = "{% url live_support.views.client_get_messages chat.hash_key %}";
+    document.get_messages_url = "{% url "live_support.views.client_get_messages" chat.hash_key %}";
 </script>
 <link href="{{ STATIC_URL }}live_support/css/live_support.css" type="text/css" media="all" rel="stylesheet" />
 <div class="chat">
@@ -19,14 +20,14 @@
         {% endfor %}
         </ul>
         <div class="message_box_container">
-            <form method="post" action="{% url live_support.views.client_post_message chat.hash_key %}">
+            <form method="post" action="{% url "live_support.views.client_post_message" chat.hash_key %}">
                 {% csrf_token %}
                 <input type="hidden" class="chat_id" name="chat_id" value="{{ chat.id }}" />
                 <input type="text" class="message_box" name="message" />
                 <input type="submit" class="send_message_button" value="{% trans 'Send' %}" />
             </form>
             <form method="post" 
-                action="{% url live_support.views.client_end_chat chat.hash_key %}"
+                action="{% url "live_support.views.client_end_chat" chat.hash_key %}"
             >
                 {% csrf_token %}
                 <input type="hidden" name="name" value="{{ chat.name }}" />

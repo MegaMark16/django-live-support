@@ -173,7 +173,7 @@ function messageSent(response, code) {
 // Scroll all of the active chat sessions message lists to the bottom.
 function scrollAll() {
     $('.message_list ul').each(function(index, control) {
-        $(control).scrollTop($(control).attr('scrollHeight') - $(control).height());
+        $(control).scrollTop(control.scrollHeight - $(control).height());
     });
 }
 

@@ -1,5 +1,5 @@
 {% extends "admin/change_list.html" %}
-{% load i18n %}
+{% load url from future %}
 {% load i18n admin_list %}
 
 {% block content_title %}
@@ -8,14 +8,14 @@
 
 {% block content %}
     <script>
-        document.get_messages_url = "{% url live_support.views.get_messages %}";
+        document.get_messages_url = "{% url "live_support.views.get_messages" %}";
     </script>
     <div class="module">
         <div class="pending_chats">
             <h4>{% trans 'Pending Chats' %}</h4>
             <ul>
             {% for chat in pending_chats %}
-                <li><a class="{{ chat.is_active }}" href="{% url live_support.views.join_chat chat.id %}">{{ chat.name }}</a></li>
+                <li><a class="{{ chat.is_active }}" href="{% url "live_support.views.join_chat" chat.id %}">{{ chat.name }}</a></li>
             {% endfor %}
             </ul>
         </div>
@@ -23,7 +23,7 @@
         <h4>{% trans 'Your Chats' %}</h4>
         <ul class="chat_names">
         {% for chat in active_chats %}
-            <li><a href="{{ chat.id }}" send_message_url="{% url live_support.views.post_message chat.id %}">{{ chat.name }}</a></li>
+            <li><a href="{{ chat.id }}" send_message_url="{% url "live_support.views.post_message" chat.id %}">{{ chat.name }}</a></li>
         {% endfor %}
         </ul>
         {% for chat in active_chats %}
@@ -42,14 +42,14 @@
                     {% endfor %}
                     </ul>
                     <div class="message_box_container">
-                        <form method="post" action="{% url live_support.views.post_message chat.id %}">
+                        <form method="post" action="{% url "live_support.views.post_message" chat.id %}">
                             {% csrf_token %}
                             <input type="hidden" class="chat_id" name="chat_id" value="{{ chat.id }}" />
                             <input type="text" class="message_box" name="message" />
                             <input type="submit" class="send_message_button" value="{% trans 'Send' %}" />
                         </form>
                         <form method="post" 
-                            action="{% url live_support.views.end_chat chat.id %}"
+                            action="{% url "live_support.views.end_chat" chat.id %}"
                         >
                             {% csrf_token %}
                             <input type="hidden" name="end_chat" value="true" />

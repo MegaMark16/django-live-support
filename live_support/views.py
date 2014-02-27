@@ -237,7 +237,7 @@ def start_chat(request, support_group_id=None):
         chat.support_group_id = support_group_id
         chat.save()
         if admin_active:
-            request.session['chat_hash_key'] = chat.hash_key
+            request.session['chat_hash_key'] = chat.hash_key.hex
             return HttpResponseRedirect(reverse(
                 'client_chat',
                 args=[chat.hash_key,])
